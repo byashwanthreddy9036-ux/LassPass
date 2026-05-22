@@ -18,7 +18,6 @@ const App = () => {
     generatePassword()
     if (state && totalSelected === 1) return
     setter(prev => !prev)
-    generatePassword()
   }
 
   const copyPassword = () => {
