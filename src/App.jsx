@@ -1,13 +1,13 @@
 import React, { useCallback, useEffect, useState } from 'react'
 
 const App = () => {
-  const [passwordLength, setpasswordLength] = useState(8)
-  const [upperCaseAllowed, setupperCaseAllowed] = useState(true)
-  const [lowerCaseAllowed, setlowerCaseAllowed] = useState(true)
-  const [numbersAllowed, setnumbersAllowed] = useState(true)
-  const [symbolsAllowed, setsymbolsAllowed] = useState(true)
-  const [password, setpassword] = useState('')
-  const [copied, setcopied] = useState(false)
+  const [passwordLength, setPasswordLength] = useState(8)
+  const [upperCaseAllowed, setUpperCaseAllowed] = useState(true)
+  const [lowerCaseAllowed, setLowerCaseAllowed] = useState(true)
+  const [numbersAllowed, setNumbersAllowed] = useState(true)
+  const [symbolsAllowed, setSymbolsAllowed] = useState(true)
+  const [password, setPassword] = useState('')
+  const [copied, setCopied] = useState(false)
 
   const handleCheckboxChange = (state, setter) => {
     const totalSelected =
@@ -16,39 +16,31 @@ const App = () => {
       Number(numbersAllowed) +
       Number(symbolsAllowed)
 
-      generatePassword()
     if (state && totalSelected === 1) return
-
     setter(prev => !prev)
   }
 
   const copyPassword = () => {
     navigator.clipboard.writeText(password)
-    setcopied(true)
+    setCopied(true)
     setTimeout(() => {
-      setcopied(false)
-    }, 2000);
+      setCopied(false)
+    }, 2000)
   }
 
   const generatePassword = useCallback(() => {
-    // if (!lowerCaseAllowed && !upperCaseAllowed && !numbersAllowed) return setsymbolsAllowed(prev => !prev)
-    // if (!symbolsAllowed && !upperCaseAllowed && !numbersAllowed) return setlowerCaseAllowed(prev => !prev)
-    // if (!lowerCaseAllowed && !symbolsAllowed && !numbersAllowed) return setupperCaseAllowed(prev => !prev)
-    // if (!lowerCaseAllowed && !upperCaseAllowed && !symbolsAllowed) return setnumbersAllowed(prev => !prev)
     let str = ''
     if (lowerCaseAllowed) str += 'abcdefghijklmnopqrstuvwxyz'
     if (symbolsAllowed) str += '!@#$%^&*()_+'
     if (upperCaseAllowed) str += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-    if (numbersAllowed) str += '01234567890123456789'
-    let password = ''
+    if (numbersAllowed) str += '0123456789'
+    let pwd = ''
     for (let i = 0; i < passwordLength; i++) {
       const randomIndex = Math.floor(Math.random() * str.length)
-      password += str[randomIndex]
+      pwd += str[randomIndex]
     }
-    setpassword(password)
-  }, [upperCaseAllowed, lowerCaseAllowed, symbolsAllowed, numbersAllowed, passwordLength],
-  )
-
+    setPassword(pwd)
+  }, [upperCaseAllowed, lowerCaseAllowed, symbolsAllowed, numbersAllowed, passwordLength])
 
   useEffect(() => {
     generatePassword()
@@ -69,16 +61,14 @@ const App = () => {
 
           <button onClick={generatePassword}
             className="bg-cyan-500 hover:bg-cyan-600 transition px-5 py-3 rounded-xl font-semibold">
-            <img
-              src="https://img.icons8.com/?size=100&id=60634&format=png&color=000000"
-              alt="home"
-              className="w-auto h-6"
-            />
+            <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M4 4v5h.582M20 20v-5h-.581M5.635 19A9 9 0 1 0 4.582 9H4" />
+            </svg>
           </button>
 
           <button
             onClick={copyPassword}
-            className={`${!copied ? 'bg-green-500 hover:bg-green-600' : 'bg-blue-950'} transition px-5 py-3 rounded-xl font-semibold `}>
+            className={`${!copied ? 'bg-green-500 hover:bg-green-600' : 'bg-blue-950'} transition px-5 py-3 rounded-xl font-semibold`}>
             {copied ? "Copied!" : "Copy"}
           </button>
         </div>
@@ -90,7 +80,7 @@ const App = () => {
             Password Length : {passwordLength}
           </p>
 
-          <input type="range" value={passwordLength} onChange={(event) => setpasswordLength(Number(event.target.value))} min={5} max={50} className="w-full accent-cyan-400 cursor-pointer" />
+          <input type="range" value={passwordLength} onChange={(event) => setPasswordLength(Number(event.target.value))} min={5} max={50} className="w-full accent-cyan-400 cursor-pointer" />
         </div>
 
         {/* Options */}
@@ -102,28 +92,28 @@ const App = () => {
 
           <label className="flex items-center gap-2 cursor-pointer">
             <input type="checkbox"
-              onChange={() => handleCheckboxChange(upperCaseAllowed, setupperCaseAllowed)}
+              onChange={() => handleCheckboxChange(upperCaseAllowed, setUpperCaseAllowed)}
               checked={upperCaseAllowed} />
             <p>Uppercase</p>
           </label>
 
           <label className="flex items-center gap-2 cursor-pointer">
             <input type="checkbox"
-              onChange={() => handleCheckboxChange(lowerCaseAllowed, setlowerCaseAllowed)}
+              onChange={() => handleCheckboxChange(lowerCaseAllowed, setLowerCaseAllowed)}
               checked={lowerCaseAllowed} />
             <p>Lowercase</p>
           </label>
 
           <label className="flex items-center gap-2 cursor-pointer">
             <input type="checkbox"
-              onChange={() => handleCheckboxChange(numbersAllowed, setnumbersAllowed)}
+              onChange={() => handleCheckboxChange(numbersAllowed, setNumbersAllowed)}
               checked={numbersAllowed} />
             <p>Numbers</p>
           </label>
 
           <label className="flex items-center gap-2 cursor-pointer">
             <input type="checkbox"
-              onChange={() => handleCheckboxChange(symbolsAllowed, setsymbolsAllowed)}
+              onChange={() => handleCheckboxChange(symbolsAllowed, setSymbolsAllowed)}
               checked={symbolsAllowed} />
             <p>Symbols</p>
           </label>
