@@ -15,7 +15,7 @@ const App = () => {
       Number(lowerCaseAllowed) +
       Number(numbersAllowed) +
       Number(symbolsAllowed)
-
+    generatePassword()
     if (state && totalSelected === 1) return
     setter(prev => !prev)
   }
