@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 const App = () => {
   const [passwordLength, setPasswordLength] = useState(8)
@@ -15,7 +15,6 @@ const App = () => {
       Number(lowerCaseAllowed) +
       Number(numbersAllowed) +
       Number(symbolsAllowed)
-    generatePassword()
     if (state && totalSelected === 1) return
     setter(prev => !prev)
   }
